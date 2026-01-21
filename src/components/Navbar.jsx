@@ -33,7 +33,7 @@ const Navbar = () => {
             <div className="container">
                 <nav className="navbar__inner">
                     <Link to="/" className="navbar__logo">
-                        <span className="logo-icon">✿</span>
+                        <span className="logo-icon">🌹</span>
                         <div className="logo-text">
                             <span className="logo-name">Blue Rose</span>
                             <span className="logo-tagline">Aesthetics & Wellness</span>
@@ -54,8 +54,8 @@ const Navbar = () => {
                     </ul>
 
                     <div className="navbar__actions">
-                        <Button href="tel:+19155551234" variant="ghost" size="small">
-                            (915) 555-1234
+                        <Button href="tel:+19154652229" variant="ghost" size="small">
+                            (915) 465-2229
                         </Button>
                         <Button href="/contact" variant="primary" size="small">
                             Book Now
@@ -89,8 +89,8 @@ const Navbar = () => {
                     ))}
                 </ul>
                 <div className="mobile-menu__actions">
-                    <Button href="tel:+19155551234" variant="secondary" size="large">
-                        Call (915) 555-1234
+                    <Button href="tel:+19154652229" variant="secondary" size="large">
+                        Call (915) 465-2229
                     </Button>
                     <Button href="/contact" variant="primary" size="large">
                         Book Consultation

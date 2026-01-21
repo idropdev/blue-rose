@@ -10,7 +10,7 @@ const Footer = () => {
                 <div className="footer__main">
                     <div className="footer__brand">
                         <Link to="/" className="footer__logo">
-                            <span className="logo-icon">✿</span>
+                            <span className="logo-icon">🌹</span>
                             <div className="logo-text">
                                 <span className="logo-name">Blue Rose</span>
                                 <span className="logo-tagline">Aesthetics & Wellness</span>
@@ -69,7 +69,7 @@ const Footer = () => {
                                 </li>
                                 <li>
                                     <span>📞</span>
-                                    <a href="tel:+19155551234">(915) 555-1234</a>
+                                    <a href="tel:+19154652229">(915) 465-2229</a>
                                 </li>
                                 <li>
                                     <span>✉️</span>

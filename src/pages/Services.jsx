@@ -255,7 +255,7 @@ const Services = () => {
                 title="Ready to Get Started?"
                 subtitle="Book your complimentary consultation and let us create a personalized treatment plan just for you."
                 primaryCTA={{ text: 'Book Consultation', href: '/contact' }}
-                secondaryCTA={{ text: 'Call (915) 555-1234', href: 'tel:+19155551234' }}
+                secondaryCTA={{ text: 'Call (915) 465-2229', href: 'tel:+19154652229' }}
                 variant="dark"
             />
         </main>

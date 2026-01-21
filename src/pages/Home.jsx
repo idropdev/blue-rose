@@ -140,22 +140,6 @@ const Home = () => {
                                 View Services
                             </Button>
                         </div>
-                        <div className="hero__trust fade-in">
-                            <div className="trust-item">
-                                <span className="trust-number">5,000+</span>
-                                <span className="trust-label">Happy Clients</span>
-                            </div>
-                            <div className="trust-divider"></div>
-                            <div className="trust-item">
-                                <span className="trust-number">4.9★</span>
-                                <span className="trust-label">Google Rating</span>
-                            </div>
-                            <div className="trust-divider"></div>
-                            <div className="trust-item">
-                                <span className="trust-number">10+</span>
-                                <span className="trust-label">Years Experience</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -237,7 +221,7 @@ const Home = () => {
                 title="Ready to Start Your Transformation?"
                 subtitle="Book your complimentary consultation today and discover the treatments that are right for you."
                 primaryCTA={{ text: 'Schedule Consultation', href: '/contact' }}
-                secondaryCTA={{ text: 'Call (915) 555-1234', href: 'tel:+19155551234' }}
+                secondaryCTA={{ text: 'Call (915) 465-2229', href: 'tel:+19154652229' }}
                 variant="dark"
             />
 
@@ -298,7 +282,7 @@ const Home = () => {
                                     <span className="location-icon">📞</span>
                                     <div>
                                         <strong>Contact</strong>
-                                        <p>(915) 555-1234</p>
+                                        <p>(915) 465-2229</p>
                                     </div>
                                 </div>
                             </div>
@@ -306,7 +290,7 @@ const Home = () => {
                                 <Button href="/contact" variant="primary">
                                     Book Appointment
                                 </Button>
-                                <Button href="tel:+19155551234" variant="secondary">
+                                <Button href="tel:+19154652229" variant="secondary">
                                     Call Now
                                 </Button>
                             </div>

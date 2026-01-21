@@ -33,6 +33,7 @@
 .logo-icon {
     font-size: 2rem;
     color: var(--rose-accent);
+    filter: hue-rotate(200deg) saturate(1.2);
 }
 
 .logo-text {
