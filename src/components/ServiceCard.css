@@ -1,0 +1,89 @@
+.service-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: var(--space-xl);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.service-card__icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto var(--space-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--blue-light), var(--rose-soft));
+    border-radius: 50%;
+    font-size: 2rem;
+}
+
+.service-card__title {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--blue-dark);
+    margin-bottom: var(--space-sm);
+}
+
+.service-card__description {
+    color: var(--neutral-mid);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    margin-bottom: var(--space-md);
+    flex-grow: 1;
+}
+
+.service-card__features {
+    list-style: none;
+    margin-bottom: var(--space-md);
+    text-align: left;
+    padding: var(--space-sm) 0;
+    border-top: 1px solid var(--neutral-light);
+}
+
+.service-card__features li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--neutral-mid);
+}
+
+.service-card__features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--rose-accent);
+    font-weight: 600;
+}
+
+/* Variant for featured/highlighted cards */
+.service-card--featured {
+    background: linear-gradient(135deg, var(--blue-dark), #2d4a6f);
+    color: var(--white);
+}
+
+.service-card--featured .service-card__icon {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.service-card--featured .service-card__title {
+    color: var(--white);
+}
+
+.service-card--featured .service-card__description {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.service-card--featured .service-card__features li {
+    color: rgba(255, 255, 255, 0.8);
+}

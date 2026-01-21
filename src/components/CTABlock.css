@@ -1,0 +1,113 @@
+.cta-block {
+    position: relative;
+    padding: var(--space-4xl) 0;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.cta-block__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(30, 58, 95, 0.9), rgba(107, 154, 196, 0.85));
+}
+
+.cta-block__content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cta-block__title {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin-bottom: var(--space-md);
+}
+
+.cta-block__subtitle {
+    font-size: 1.125rem;
+    margin-bottom: var(--space-xl);
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-block__actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+/* Variants */
+.cta-block--default {
+    background: linear-gradient(135deg, var(--blue-light), var(--rose-soft));
+}
+
+.cta-block--default .cta-block__title {
+    color: var(--blue-dark);
+}
+
+.cta-block--default .cta-block__subtitle {
+    color: var(--neutral-mid);
+}
+
+.cta-block--dark {
+    background: linear-gradient(135deg, var(--blue-dark), #2d4a6f);
+}
+
+.cta-block--dark .cta-block__title {
+    color: var(--white);
+}
+
+.cta-block--dark .cta-block__subtitle {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.cta-block--rose {
+    background: linear-gradient(135deg, var(--rose-soft), var(--rose-accent));
+}
+
+.cta-block--rose .cta-block__title {
+    color: var(--blue-dark);
+}
+
+.cta-block--rose .cta-block__subtitle {
+    color: var(--neutral-dark);
+}
+
+/* Decorative elements */
+.cta-block--default::before,
+.cta-block--default::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    opacity: 0.1;
+}
+
+.cta-block--default::before {
+    background: var(--rose-accent);
+    top: -100px;
+    left: -100px;
+}
+
+.cta-block--default::after {
+    background: var(--blue-dark);
+    bottom: -100px;
+    right: -100px;
+}
+
+@media (max-width: 576px) {
+    .cta-block__actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cta-block__actions .btn {
+        width: 100%;
+        max-width: 280px;
+    }
+}
