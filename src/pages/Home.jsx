@@ -1,320 +1,286 @@
-import { useEffect } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../components/Button';
-import ServiceCard from '../components/ServiceCard';
-import TestimonialCard from '../components/TestimonialCard';
-import CTABlock from '../components/CTABlock';
+import PetalField from '../components/PetalField';
+import ServicesCarousel from '../components/ServicesCarousel';
+import MapSection from '../components/MapSection';
+import RoseMark from '../components/RoseMark';
+import { useReveal, useGSAP, gsap } from '../hooks/useReveal';
+import {
+  CONTACT,
+  PILLARS,
+  BEFORE_AFTERS,
+  WHY,
+  PRODUCTS,
+  STORY_QUOTE,
+} from '../data/content';
 import './Home.css';
 
-const Home = () => {
-    useEffect(() => {
-        // Scroll animation observer
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            },
-            { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+const ArrowIcon = () => (
+  <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+    <path d="M2 12 12 2M5 2h7v7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+export default function Home() {
+  const scope = useRef(null);
+  useReveal(scope);
+
+  // Hero entrance timeline
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap
+          .timeline({ defaults: { ease: 'power3.out' } })
+          .fromTo('.hero__eyebrow', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.9 }, 0.15)
+          .fromTo(
+            '.hero h1 .hero-line',
+            { opacity: 0, y: 70, rotate: 2 },
+            { opacity: 1, y: 0, rotate: 0, duration: 1.25, stagger: 0.12 },
+            0.3
+          )
+          .fromTo('.hero__sub', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 }, 0.85)
+          .fromTo('.hero__actions', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 1 }, 1.0)
+          .fromTo('.hero__badges', { opacity: 0 }, { opacity: 1, duration: 1.2 }, 1.25)
+          .fromTo('.hero__scroll', { opacity: 0 }, { opacity: 1, duration: 1 }, 1.5);
+      });
+      mm.add('(prefers-reduced-motion: reduce)', () => {
+        gsap.set(
+          ['.hero__eyebrow', '.hero h1 .hero-line', '.hero__sub', '.hero__actions', '.hero__badges', '.hero__scroll'],
+          { opacity: 1, y: 0 }
         );
+      });
+    },
+    { scope }
+  );
 
-        document.querySelectorAll('.fade-in, .slide-up').forEach(el => {
-            observer.observe(el);
-        });
+  return (
+    <main ref={scope}>
+      {/* ============ HERO ============ */}
+      <section className="hero">
+        <div className="hero__wash" aria-hidden="true" />
+        <PetalField className="hero__petals" />
+        <div className="container hero__content">
+          <span className="eyebrow hero__eyebrow">El Paso · Medical Spa &amp; Wellness</span>
+          <h1>
+            <span className="hero-line">Where wellness meets</span>
+            <span className="hero-line"><em>aesthetic precision</em></span>
+          </h1>
+          <p className="lede hero__sub">
+            Personalized, evidence-based treatments designed to help you feel
+            confident, refreshed, and naturally radiant.
+          </p>
+          <div className="hero__actions">
+            <a href={CONTACT.booking} target="_blank" rel="noreferrer" className="btn btn--primary">
+              Book Now
+              <span className="btn__orb"><ArrowIcon /></span>
+            </a>
+            <Link to="/services" className="btn btn--ghost">
+              View Services
+              <span className="btn__orb"><ArrowIcon /></span>
+            </Link>
+          </div>
+          <div className="hero__badges">
+            <span>Clinically-led</span>
+            <i />
+            <span>Family Nurse Practitioner</span>
+            <i />
+            <span>Boutique care</span>
+          </div>
+        </div>
+        <div className="hero__scroll" aria-hidden="true">
+          <span>Scroll</span>
+          <em />
+        </div>
+      </section>
 
-        return () => observer.disconnect();
-    }, []);
-
-    const services = [
-        {
-            icon: '💉',
-            title: 'Injectables',
-            description: 'Refresh your look with expert Botox, fillers, and aesthetic treatments that enhance your natural beauty.',
-            features: ['Botox & Dysport', 'Dermal Fillers', 'Lip Enhancement']
-        },
-        {
-            icon: '💧',
-            title: 'IV Hydration',
-            description: 'Revitalize from within with customized IV therapy treatments designed for optimal wellness.',
-            features: ['Energy Boost', 'Immunity Support', 'Beauty Drips']
-        },
-        {
-            icon: '⚖️',
-            title: 'Weight Management',
-            description: 'Achieve your wellness goals with medically-supervised weight loss programs tailored to you.',
-            features: ['Semaglutide', 'B12 Injections', 'Custom Plans']
-        },
-        {
-            icon: '✨',
-            title: 'Skin Rejuvenation',
-            description: 'Transform your skin with advanced treatments that restore youthful radiance and glow.',
-            features: ['Chemical Peels', 'Microneedling', 'Facials']
-        },
-        {
-            icon: '🌸',
-            title: 'Wellness',
-            description: 'Comprehensive wellness services designed to help you look and feel your absolute best.',
-            features: ['Hormone Therapy', 'Vitamin Shots', 'Health Optimization']
-        },
-        {
-            icon: '💎',
-            title: 'Premium Care',
-            description: 'Exclusive treatments and personalized care packages for the ultimate aesthetic experience.',
-            features: ['VIP Packages', 'Membership Plans', 'Concierge Service']
-        }
-    ];
-
-    const testimonials = [
-        {
-            quote: "Blue Rose transformed my confidence. The staff is incredibly professional, and the results exceeded my expectations. I finally feel like myself again!",
-            author: "Maria S.",
-            service: "Botox & Fillers",
-            rating: 5
-        },
-        {
-            quote: "The IV hydration therapy gave me the energy boost I desperately needed. The atmosphere is so relaxing and luxurious. Highly recommend!",
-            author: "Jennifer L.",
-            service: "IV Hydration",
-            rating: 5
-        },
-        {
-            quote: "I've tried many places, but Blue Rose is truly exceptional. Their personalized approach to weight management actually works. Down 30 lbs!",
-            author: "Amanda R.",
-            service: "Weight Management",
-            rating: 5
-        }
-    ];
-
-    const whyChoose = [
-        {
-            icon: '🏆',
-            title: 'Expert Practitioners',
-            description: 'Board-certified professionals with years of experience in aesthetic medicine.'
-        },
-        {
-            icon: '🌟',
-            title: 'Premium Experience',
-            description: 'A luxurious, spa-like environment designed for your comfort and relaxation.'
-        },
-        {
-            icon: '💝',
-            title: 'Personalized Care',
-            description: 'Customized treatment plans tailored to your unique goals and concerns.'
-        },
-        {
-            icon: '✅',
-            title: 'Proven Results',
-            description: 'Thousands of satisfied clients with natural-looking, confidence-boosting outcomes.'
-        }
-    ];
-
-    return (
-        <main className="home">
-            {/* Hero Section */}
-            <section className="hero">
-                <div className="hero__background">
-                    <div className="hero__gradient"></div>
-                    <div className="hero__shapes">
-                        <div className="shape shape--1"></div>
-                        <div className="shape shape--2"></div>
-                        <div className="shape shape--3"></div>
-                    </div>
+      {/* ============ PILLARS ============ */}
+      <section className="section pillars">
+        <div className="container">
+          <div className="pillars__grid">
+            {PILLARS.map((p, i) => (
+              <article className="shell pillar rv" data-rv-delay={i * 0.08} key={p.n}>
+                <div className="shell__core pillar__core">
+                  <span className="pillar__n">{p.n}</span>
+                  <h3>{p.title}</h3>
+                  <p>{p.body}</p>
                 </div>
-                <div className="container">
-                    <div className="hero__content">
-                        <span className="hero__badge fade-in">✿ Welcome to Blue Rose</span>
-                        <h1 className="hero__title fade-in">
-                            Elevate Your <span className="highlight">Natural Beauty</span>
-                        </h1>
-                        <p className="hero__subtitle fade-in">
-                            Experience premium aesthetic treatments and wellness services in El Paso's
-                            most luxurious med spa. Discover the confident, radiant you.
-                        </p>
-                        <div className="hero__ctas fade-in">
-                            <Button href="/contact" variant="primary" size="large">
-                                Book a Consultation
-                            </Button>
-                            <Button href="/services" variant="secondary" size="large">
-                                View Services
-                            </Button>
-                        </div>
-                    </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ INTRO ============ */}
+      <section className="section intro">
+        <div className="container intro__grid">
+          <div className="intro__copy rv">
+            <span className="eyebrow">The Blue Rose Standard</span>
+            <h2 className="h-display">
+              Where wellness meets <em>precision</em>
+            </h2>
+            <p className="lede">
+              At Blue Rose Aesthetics &amp; Wellness, we blend clinical expertise
+              with a warm, patient-centered approach. Every treatment is designed
+              to enhance natural beauty, support whole-body wellness, and honor
+              the confidence you carry into the world.
+            </p>
+            <div className="intro__actions">
+              <Link to="/services" className="btn btn--primary">
+                Explore Services
+                <span className="btn__orb"><ArrowIcon /></span>
+              </Link>
+              <Link to="/about" className="btn btn--ghost">
+                Meet Your Provider
+                <span className="btn__orb"><ArrowIcon /></span>
+              </Link>
+            </div>
+          </div>
+          <div className="intro__mark rv" data-rv-delay="0.15" aria-hidden="true">
+            <RoseMark size={280} color="var(--cobalt)" />
+          </div>
+        </div>
+      </section>
+
+      {/* ============ SERVICES CAROUSEL ============ */}
+      <section className="section svc-section">
+        <div className="container svc-section__head">
+          <div className="rv">
+            <span className="eyebrow">Our Services</span>
+            <h2 className="h-display">
+              Curated treatments,<br />
+              <em>tailored to you</em>
+            </h2>
+          </div>
+          <p className="lede rv" data-rv-delay="0.1">
+            A curated collection of aesthetic and wellness treatments — hover or
+            tap any card to explore. Every service is personalized with a gentle,
+            evidence-based approach.
+          </p>
+        </div>
+        <div className="rv" data-rv-y="60">
+          <ServicesCarousel />
+        </div>
+      </section>
+
+      {/* ============ BEFORE & AFTER ============ */}
+      <section className="section ba-section">
+        <div className="container">
+          <div className="ba-section__head rv">
+            <span className="eyebrow">Before &amp; After</span>
+            <h2 className="h-display">
+              Real clients. <em>Real results.</em>
+            </h2>
+            <p className="lede">Always natural, always you.</p>
+          </div>
+          <div className="ba-grid">
+            {BEFORE_AFTERS.map((b, i) => (
+              <figure
+                className={`ba-card rv ba-card--${i % 2 ? 'low' : 'high'}`}
+                data-rv-delay={i * 0.08}
+                key={b.label}
+              >
+                <img src={b.image} alt={`${b.label} — before and after`} loading="lazy" />
+                <figcaption>{b.label}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ STORY QUOTE ============ */}
+      <section className="story">
+        <PetalField className="story__petals" density={0.5} />
+        <div className="container story__inner">
+          <RoseMark size={54} color="var(--periwinkle)" />
+          <blockquote className="rv" data-rv-y="50">
+            “{STORY_QUOTE}”
+          </blockquote>
+          <Link to="/about" className="story__link rv" data-rv-delay="0.15">
+            The story behind our name →
+          </Link>
+        </div>
+      </section>
+
+      {/* ============ WHY BLUE ROSE ============ */}
+      <section className="section why">
+        <div className="container why__grid">
+          <div className="why__sticky rv">
+            <span className="eyebrow">Why Choose Blue Rose</span>
+            <h2 className="h-display">
+              Care that puts <em>you</em> first
+            </h2>
+            <a href={CONTACT.booking} target="_blank" rel="noreferrer" className="btn btn--primary">
+              Book a Consultation
+              <span className="btn__orb"><ArrowIcon /></span>
+            </a>
+          </div>
+          <ol className="why__list">
+            {WHY.map((w, i) => (
+              <li className="why__item rv" data-rv-delay={i * 0.05} key={w.title}>
+                <span>{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3>{w.title}</h3>
+                  <p>{w.body}</p>
                 </div>
-            </section>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
-            {/* Services Section */}
-            <section className="section services-section" id="services">
-                <div className="container">
-                    <div className="section-header">
-                        <span className="section-badge fade-in">Our Services</span>
-                        <h2 className="fade-in">Transformative Treatments</h2>
-                        <div className="divider"></div>
-                        <p className="fade-in">
-                            Discover our comprehensive range of aesthetic and wellness services
-                            designed to help you look and feel your absolute best.
-                        </p>
-                    </div>
-                    <div className="grid grid-3 services-grid">
-                        {services.map((service, index) => (
-                            <ServiceCard
-                                key={index}
-                                icon={service.icon}
-                                title={service.title}
-                                description={service.description}
-                                features={service.features}
-                                delay={index * 100}
-                            />
-                        ))}
-                    </div>
-                    <div className="services-cta fade-in">
-                        <Button href="/services" variant="secondary" size="large">
-                            Explore All Services
-                        </Button>
-                    </div>
+      {/* ============ CCMARQ TEASER ============ */}
+      <section className="section shelf">
+        <div className="container">
+          <div className="shelf__head rv">
+            <div>
+              <span className="eyebrow">CCMARQ Skin Care</span>
+              <h2 className="h-display">
+                Clinical luxury,<br /><em>bottled</em>
+              </h2>
+            </div>
+            <Link to="/products" className="btn btn--ghost">
+              Shop the Collection
+              <span className="btn__orb"><ArrowIcon /></span>
+            </Link>
+          </div>
+          <div className="shelf__row">
+            {PRODUCTS.slice(0, 4).map((p, i) => (
+              <Link to="/products" className="shelf__item rv" data-rv-delay={i * 0.07} key={p.name}>
+                <div className="shelf__img">
+                  <img src={p.image} alt={p.name} loading="lazy" />
                 </div>
-            </section>
-
-            {/* Why Choose Section */}
-            <section className="section section--light why-section">
-                <div className="container">
-                    <div className="why-grid">
-                        <div className="why-content">
-                            <span className="section-badge fade-in">Why Blue Rose</span>
-                            <h2 className="fade-in">Where Expertise Meets Elegance</h2>
-                            <div className="divider divider--left"></div>
-                            <p className="fade-in">
-                                At Blue Rose Aesthetics & Wellness, we believe everyone deserves to feel
-                                confident in their own skin. Our patient-first approach combines medical
-                                expertise with personalized care in a serene, luxurious environment.
-                            </p>
-                            <div className="why-features">
-                                {whyChoose.map((item, index) => (
-                                    <div key={index} className="why-feature fade-in" style={{ transitionDelay: `${index * 100}ms` }}>
-                                        <span className="why-feature__icon">{item.icon}</span>
-                                        <div className="why-feature__content">
-                                            <h4>{item.title}</h4>
-                                            <p>{item.description}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <Button href="/about" variant="ghost" className="fade-in">
-                                Learn More About Us
-                            </Button>
-                        </div>
-                        <div className="why-image fade-in">
-                            <div className="image-frame">
-                                <div className="image-placeholder">
-                                    <span>✿</span>
-                                    <p>Luxury Med Spa Experience</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div className="shelf__meta">
+                  <h4>{p.name}</h4>
+                  <span>${p.price}</span>
                 </div>
-            </section>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            {/* CTA Block */}
-            <CTABlock
-                title="Ready to Start Your Transformation?"
-                subtitle="Book your complimentary consultation today and discover the treatments that are right for you."
-                primaryCTA={{ text: 'Schedule Consultation', href: '/contact' }}
-                secondaryCTA={{ text: 'Call (915) 465-2229', href: 'tel:+19154652229' }}
-                variant="dark"
-            />
+      {/* ============ CTA ============ */}
+      <section className="section cta">
+        <div className="container">
+          <div className="cta__panel rv" data-rv-y="50">
+            <PetalField className="cta__petals" density={0.4} />
+            <div className="cta__inner">
+              <h2>Start your wellness journey</h2>
+              <p>
+                Book your personalized consultation and experience natural,
+                subtle, clinically-led results.
+              </p>
+              <a href={CONTACT.booking} target="_blank" rel="noreferrer" className="btn btn--light">
+                Book Now
+                <span className="btn__orb"><ArrowIcon /></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Testimonials Section */}
-            <section className="section testimonials-section">
-                <div className="container">
-                    <div className="section-header">
-                        <span className="section-badge fade-in">Testimonials</span>
-                        <h2 className="fade-in">What Our Clients Say</h2>
-                        <div className="divider"></div>
-                        <p className="fade-in">
-                            Real stories from real clients who have experienced the Blue Rose difference.
-                        </p>
-                    </div>
-                    <div className="grid grid-3 testimonials-grid">
-                        {testimonials.map((testimonial, index) => (
-                            <TestimonialCard
-                                key={index}
-                                quote={testimonial.quote}
-                                author={testimonial.author}
-                                service={testimonial.service}
-                                rating={testimonial.rating}
-                                delay={index * 100}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Location Section */}
-            <section className="section section--blue location-section">
-                <div className="container">
-                    <div className="location-grid">
-                        <div className="location-content fade-in">
-                            <span className="section-badge">Visit Us</span>
-                            <h2>Located in the Heart of El Paso</h2>
-                            <div className="divider divider--left"></div>
-                            <p>
-                                Conveniently located with ample parking and a welcoming atmosphere.
-                                We can't wait to meet you!
-                            </p>
-                            <div className="location-details">
-                                <div className="location-item">
-                                    <span className="location-icon">📍</span>
-                                    <div>
-                                        <strong>Address</strong>
-                                        <p>1234 Luxury Lane, El Paso, TX 79901</p>
-                                    </div>
-                                </div>
-                                <div className="location-item">
-                                    <span className="location-icon">🕐</span>
-                                    <div>
-                                        <strong>Hours</strong>
-                                        <p>Mon-Fri: 9am-6pm | Sat: 10am-4pm</p>
-                                    </div>
-                                </div>
-                                <div className="location-item">
-                                    <span className="location-icon">📞</span>
-                                    <div>
-                                        <strong>Contact</strong>
-                                        <p>(915) 465-2229</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="location-ctas">
-                                <Button href="/contact" variant="primary">
-                                    Book Appointment
-                                </Button>
-                                <Button href="tel:+19154652229" variant="secondary">
-                                    Call Now
-                                </Button>
-                            </div>
-                        </div>
-                        <div className="location-map fade-in">
-                            <div className="map-placeholder">
-                                <span>🗺️</span>
-                                <p>Map Location</p>
-                                <small>El Paso, TX</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Final CTA */}
-            <CTABlock
-                title="Your Journey to Confidence Starts Here"
-                subtitle="Take the first step toward looking and feeling your best. Our team is ready to create your personalized treatment plan."
-                primaryCTA={{ text: 'Start Your Journey', href: '/contact' }}
-                variant="rose"
-            />
-        </main>
-    );
-};
-
-export default Home;
+      <MapSection />
+    </main>
+  );
+}

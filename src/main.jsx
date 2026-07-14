@@ -1,5 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import '@fontsource-variable/fraunces/index.css'
+import '@fontsource-variable/fraunces/wght-italic.css'
+import '@fontsource-variable/outfit/index.css'
 import './index.css'
 import App from './App.jsx'
 

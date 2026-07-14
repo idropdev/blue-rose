@@ -1,245 +1,81 @@
-import { useEffect } from 'react';
-import Button from '../components/Button';
-import CTABlock from '../components/CTABlock';
+import { useRef } from 'react';
+import PetalField from '../components/PetalField';
+import RoseMark from '../components/RoseMark';
+import { useReveal } from '../hooks/useReveal';
+import { CONTACT, STORY_QUOTE } from '../data/content';
 import './About.css';
 
-const About = () => {
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
+const STORY = [
+  'My journey in healthcare began at just 15 years old, taking care of ill family members and working in the CT and radiology department as a summer job at what was then Thomason Hospital. Those early years sparked a passion for patient care that shaped the rest of my life. I went on to become a CNA, then an RN, and eventually a board-certified Family Nurse Practitioner — each step driven by a desire to learn more, serve more, and elevate the level of care I could provide. Today, I am continuing that path by pursuing my Doctor of Nursing Practice, committed to advancing both my clinical expertise and the impact I have on my community.',
+  'As a teenage mother, I learned early what strength, resilience, and determination truly mean. I carried those lessons into every chapter of my career and into the way I raised my children — teaching them that no matter what life places in front of you, you can rise, grow, and succeed. That same belief is at the heart of my work and the foundation of my clinic.',
+  'Blue Rose Aesthetics & Wellness was named with intention. Blue roses do not occur naturally; they are created through vision, persistence, and the belief that beauty can be shaped even when it doesn’t exist yet. My clinic represents that same spirit — the idea that with knowledge, care, and intention, we can create confidence, wellness, and transformation where it once felt out of reach.',
+  'This is the story behind my practice and the purpose that guides every patient I meet. It is a privilege to serve, to teach, and to walk alongside others on their journey to feeling healthy, confident, and empowered in their own skin.',
+];
 
-        document.querySelectorAll('.fade-in, .slide-up').forEach(el => {
-            observer.observe(el);
-        });
+export default function About() {
+  const scope = useRef(null);
+  useReveal(scope);
 
-        return () => observer.disconnect();
-    }, []);
+  return (
+    <main ref={scope} className="about-page">
+      <header className="page-hero about-hero">
+        <PetalField className="about-hero__petals" density={0.45} />
+        <div className="container about-hero__inner">
+          <span className="eyebrow rv">Our Provider</span>
+          <h1 className="h-display rv" data-rv-delay="0.08">
+            Hello, <em>I’m so glad you’re here</em>
+          </h1>
+          <p className="lede rv" data-rv-delay="0.16">
+            I’m a wife, mother, educator, and Certified Family Nurse Practitioner
+            who has always believed that caring for others is both a calling and
+            a privilege. I graduated from a local high school (Go Silver Foxes!)
+            and continued my education at UTEP, where I’m now completing my
+            Doctorate of Nursing Practice.
+          </p>
+          <p className="lede rv" data-rv-delay="0.22">
+            Whether I’m teaching future nurses or caring for individuals in the
+            clinic, my goal is always the same: to listen, to support, and to
+            help people feel seen, valued, and truly cared for.
+          </p>
+        </div>
+      </header>
 
-    const values = [
-        {
-            icon: '💝',
-            title: 'Patient-First Care',
-            description: 'Every treatment plan is personalized to your unique needs, goals, and comfort level. Your well-being is always our top priority.'
-        },
-        {
-            icon: '🎯',
-            title: 'Excellence & Expertise',
-            description: 'Our team stays at the forefront of aesthetic medicine, continuously training in the latest techniques and technologies.'
-        },
-        {
-            icon: '🤝',
-            title: 'Trust & Transparency',
-            description: 'We believe in honest conversations about realistic outcomes. No pressure, just guidance to help you make informed decisions.'
-        },
-        {
-            icon: '✨',
-            title: 'Natural Results',
-            description: 'We enhance your natural beauty, not change who you are. Subtle, refined results that make you look refreshed, not "done."'
-        }
-    ];
+      <section className="section about-story">
+        <div className="container about-story__grid">
+          <aside className="about-story__side rv">
+            <RoseMark size={80} color="var(--cobalt)" />
+            <blockquote>“{STORY_QUOTE}”</blockquote>
+          </aside>
+          <div className="about-story__body">
+            <h2 className="rv">My story</h2>
+            {STORY.map((p, i) => (
+              <p className="rv" data-rv-delay={i * 0.04} key={i}>
+                {p}
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
 
-    const team = [
-        {
-            name: 'Dr. Sarah Mitchell',
-            title: 'Medical Director',
-            credentials: 'MD, Board Certified',
-            description: 'With over 15 years in aesthetic medicine, Dr. Mitchell leads our team with expertise and compassion.',
-            initial: 'SM'
-        },
-        {
-            name: 'Jessica Rodriguez',
-            title: 'Lead Aesthetic Nurse',
-            credentials: 'RN, ANP-C',
-            description: 'Specializing in injectables and skin rejuvenation, Jessica brings artistry to every treatment.',
-            initial: 'JR'
-        },
-        {
-            name: 'Amanda Chen',
-            title: 'Wellness Coordinator',
-            credentials: 'NP, ABAAHP',
-            description: 'Amanda focuses on holistic wellness, helping patients achieve optimal health inside and out.',
-            initial: 'AC'
-        }
-    ];
-
-    return (
-        <main className="about-page">
-            {/* Hero Section */}
-            <section className="about-hero">
-                <div className="about-hero__background"></div>
-                <div className="container">
-                    <div className="about-hero__content">
-                        <span className="hero-badge fade-in">About Us</span>
-                        <h1 className="fade-in">
-                            Where Beauty Meets <span className="highlight">Wellness</span>
-                        </h1>
-                        <p className="fade-in">
-                            At Blue Rose Aesthetics & Wellness, we believe everyone deserves
-                            to feel confident and beautiful in their own skin.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Story Section */}
-            <section className="section story-section">
-                <div className="container">
-                    <div className="story-grid">
-                        <div className="story-content">
-                            <span className="section-badge fade-in">Our Story</span>
-                            <h2 className="fade-in">A Legacy of Care in El Paso</h2>
-                            <div className="divider divider--left"></div>
-                            <p className="fade-in">
-                                Founded with a vision to bring luxury aesthetic care to the El Paso community,
-                                Blue Rose Aesthetics & Wellness has grown from a small practice into a trusted
-                                destination for those seeking to enhance their natural beauty.
-                            </p>
-                            <p className="fade-in">
-                                Our name reflects our philosophy — the blue rose symbolizes the extraordinary
-                                and unattainable made possible. We believe that with the right care, expertise,
-                                and personalized attention, achieving your aesthetic goals is within reach.
-                            </p>
-                            <p className="fade-in">
-                                Today, we're proud to serve thousands of patients who trust us with their
-                                aesthetic and wellness journeys. Our commitment to excellence, safety, and
-                                patient satisfaction remains at the heart of everything we do.
-                            </p>
-                        </div>
-                        <div className="story-image fade-in">
-                            <div className="image-frame">
-                                <div className="image-placeholder">
-                                    <span>✿</span>
-                                    <p>Our Welcoming Space</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Mission Section */}
-            <section className="section section--rose mission-section">
-                <div className="container">
-                    <div className="mission-content">
-                        <span className="section-badge fade-in">Our Mission</span>
-                        <h2 className="fade-in">"To empower our patients to feel confident and beautiful through personalized, expert aesthetic care delivered with warmth and integrity."</h2>
-                        <div className="divider"></div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Values Section */}
-            <section className="section values-section">
-                <div className="container">
-                    <div className="section-header">
-                        <span className="section-badge fade-in">Our Values</span>
-                        <h2 className="fade-in">What We Stand For</h2>
-                        <div className="divider"></div>
-                    </div>
-                    <div className="values-grid">
-                        {values.map((value, index) => (
-                            <div
-                                key={index}
-                                className="value-card fade-in"
-                                style={{ transitionDelay: `${index * 100}ms` }}
-                            >
-                                <span className="value-icon">{value.icon}</span>
-                                <h3>{value.title}</h3>
-                                <p>{value.description}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Team Section */}
-            <section className="section section--light team-section">
-                <div className="container">
-                    <div className="section-header">
-                        <span className="section-badge fade-in">Our Team</span>
-                        <h2 className="fade-in">Meet the Experts</h2>
-                        <div className="divider"></div>
-                        <p className="fade-in">
-                            Our skilled team of medical professionals combines expertise
-                            with artistry to deliver exceptional results.
-                        </p>
-                    </div>
-                    <div className="team-grid">
-                        {team.map((member, index) => (
-                            <div
-                                key={index}
-                                className="team-card fade-in"
-                                style={{ transitionDelay: `${index * 100}ms` }}
-                            >
-                                <div className="team-card__avatar">
-                                    {member.initial}
-                                </div>
-                                <div className="team-card__content">
-                                    <h3>{member.name}</h3>
-                                    <span className="team-title">{member.title}</span>
-                                    <span className="team-credentials">{member.credentials}</span>
-                                    <p>{member.description}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Credentials Section */}
-            <section className="section credentials-section">
-                <div className="container">
-                    <div className="credentials-grid">
-                        <div className="credential-item fade-in">
-                            <span className="credential-icon">🏥</span>
-                            <div>
-                                <h4>Board Certified</h4>
-                                <p>All treatments overseen by certified medical professionals</p>
-                            </div>
-                        </div>
-                        <div className="credential-item fade-in">
-                            <span className="credential-icon">💎</span>
-                            <div>
-                                <h4>Premium Products</h4>
-                                <p>Only FDA-approved, medical-grade products and treatments</p>
-                            </div>
-                        </div>
-                        <div className="credential-item fade-in">
-                            <span className="credential-icon">🏆</span>
-                            <div>
-                                <h4>Award Winning</h4>
-                                <p>Recognized as a top aesthetic provider in El Paso</p>
-                            </div>
-                        </div>
-                        <div className="credential-item fade-in">
-                            <span className="credential-icon">📋</span>
-                            <div>
-                                <h4>Fully Licensed</h4>
-                                <p>Texas licensed medical facility with strict safety protocols</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* CTA */}
-            <CTABlock
-                title="Ready to Experience the Difference?"
-                subtitle="Schedule a consultation and discover how our personalized approach can help you achieve your aesthetic goals."
-                primaryCTA={{ text: 'Book Your Consultation', href: '/contact' }}
-                secondaryCTA={{ text: 'Explore Services', href: '/services' }}
-                variant="dark"
-            />
-        </main>
-    );
-};
-
-export default About;
+      <section className="section about-connect">
+        <div className="container">
+          <div className="shell rv">
+            <div className="shell__core about-connect__core">
+              <span className="eyebrow">Contact</span>
+              <h2>Let’s connect</h2>
+              <p>
+                I’m always looking for new and exciting opportunities that
+                benefit my patients.
+              </p>
+              <div className="about-connect__links">
+                <a href={CONTACT.emailHref}>{CONTACT.email}</a>
+                <i />
+                <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}

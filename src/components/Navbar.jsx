@@ -1,104 +1,101 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import Button from './Button';
+import { useEffect, useState } from 'react';
+import { NavLink, Link } from 'react-router-dom';
+import RoseMark from './RoseMark';
+import { CONTACT } from '../data/content';
 import './Navbar.css';
 
-const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const location = useLocation();
+const LINKS = [
+  { to: '/', label: 'Home' },
+  { to: '/services', label: 'Services' },
+  { to: '/products', label: 'CCMARQ Skin Care' },
+  { to: '/about', label: 'Our Provider' },
+  { to: '/contact', label: 'Contact' },
+];
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-    useEffect(() => {
-        setIsMobileMenuOpen(false);
-    }, [location]);
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
 
-    const navLinks = [
-        { path: '/', label: 'Home' },
-        { path: '/services', label: 'Services' },
-        { path: '/about', label: 'About' },
-        { path: '/contact', label: 'Contact' },
-    ];
+  return (
+    <>
+      <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
+        <div className="nav__inner">
+          <Link to="/" className="nav__brand" onClick={() => setOpen(false)}>
+            <RoseMark size={30} />
+            <span className="nav__brand-text">
+              <em>Blue Rose</em>
+              <small>Aesthetics &amp; Wellness</small>
+            </span>
+          </Link>
 
-    return (
-        <header className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
-            <div className="container">
-                <nav className="navbar__inner">
-                    <Link to="/" className="navbar__logo">
-                        <span className="logo-icon">🌹</span>
-                        <div className="logo-text">
-                            <span className="logo-name">Blue Rose</span>
-                            <span className="logo-tagline">Aesthetics & Wellness</span>
-                        </div>
-                    </Link>
+          <nav className="nav__links">
+            {LINKS.map((l) => (
+              <NavLink
+                key={l.to}
+                to={l.to}
+                className={({ isActive }) => `nav__link ${isActive ? 'is-active' : ''}`}
+              >
+                {l.label}
+              </NavLink>
+            ))}
+          </nav>
 
-                    <ul className={`navbar__links ${isMobileMenuOpen ? 'active' : ''}`}>
-                        {navLinks.map(link => (
-                            <li key={link.path}>
-                                <Link
-                                    to={link.path}
-                                    className={location.pathname === link.path ? 'active' : ''}
-                                >
-                                    {link.label}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
+          <div className="nav__cta">
+            <a href={CONTACT.booking} target="_blank" rel="noreferrer" className="btn btn--primary nav__book">
+              Book Now
+              <span className="btn__orb">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                  <path d="M2 12 12 2M5 2h7v7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            </a>
+            <button
+              className={`nav__burger ${open ? 'is-open' : ''}`}
+              onClick={() => setOpen(!open)}
+              aria-label="Menu"
+              aria-expanded={open}
+            >
+              <span /><span />
+            </button>
+          </div>
+        </div>
+      </header>
 
-                    <div className="navbar__actions">
-                        <Button href="tel:+19154652229" variant="ghost" size="small">
-                            (915) 465-2229
-                        </Button>
-                        <Button href="/contact" variant="primary" size="small">
-                            Book Now
-                        </Button>
-                    </div>
-
-                    <button
-                        className={`navbar__hamburger ${isMobileMenuOpen ? 'active' : ''}`}
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        aria-label="Toggle menu"
-                    >
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </nav>
-            </div>
-
-            {/* Mobile Menu Overlay */}
-            <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
-                <ul className="mobile-menu__links">
-                    {navLinks.map(link => (
-                        <li key={link.path}>
-                            <Link
-                                to={link.path}
-                                className={location.pathname === link.path ? 'active' : ''}
-                            >
-                                {link.label}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-                <div className="mobile-menu__actions">
-                    <Button href="tel:+19154652229" variant="secondary" size="large">
-                        Call (915) 465-2229
-                    </Button>
-                    <Button href="/contact" variant="primary" size="large">
-                        Book Consultation
-                    </Button>
-                </div>
-            </div>
-        </header>
-    );
-};
-
-export default Navbar;
+      <div className={`nav-drawer ${open ? 'is-open' : ''}`}>
+        <nav className="nav-drawer__links">
+          {LINKS.map((l, i) => (
+            <NavLink
+              key={l.to}
+              to={l.to}
+              style={{ transitionDelay: open ? `${0.08 + i * 0.05}s` : '0s' }}
+              onClick={() => setOpen(false)}
+            >
+              {l.label}
+            </NavLink>
+          ))}
+        </nav>
+        <div className="nav-drawer__foot">
+          <a href={CONTACT.booking} target="_blank" rel="noreferrer" className="btn btn--light">
+            Book Now
+            <span className="btn__orb">→</span>
+          </a>
+          <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+        </div>
+      </div>
+    </>
+  );
+}
