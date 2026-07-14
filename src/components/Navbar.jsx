@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import Logo from './Logo';
 import RoseMark from './RoseMark';
 import { CONTACT } from '../data/content';
 import './Navbar.css';
@@ -32,7 +33,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
+      <header className={`nav ${scrolled ? 'nav--scrolled' : ''} ${open ? 'nav--open' : ''}`}>
         <div className="nav__inner">
           <Link to="/" className="nav__brand" onClick={() => setOpen(false)}>
             <RoseMark size={30} />

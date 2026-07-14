@@ -133,39 +133,31 @@ function renderPetalSprite(shapeFn, colors, size = 240) {
   ctx.quadraticCurveTo(size * 0.49, size * 0.55, size * 0.5, size * 0.14);
   ctx.stroke();
 
-  ctx.lineWidth = size * 0.006;
-  for (let i = 0; i < 7; i++) {
-    const t = 0.2 + i * 0.11;
-    const y0 = size * (0.95 - t * 0.8);
-    const spread = size * (0.16 + t * 0.32);
-    for (const dir of [-1, 1]) {
-      ctx.strokeStyle = `rgba(15,18,80,${0.16 - i * 0.014})`;
-      ctx.beginPath();
-      ctx.moveTo(size * 0.5, y0);
-      ctx.quadraticCurveTo(
-        size * 0.5 + dir * spread * 0.55, y0 - size * 0.1,
-        size * 0.5 + dir * spread, y0 - size * (0.16 + t * 0.1)
-      );
-      ctx.stroke();
-    }
+  // Rose petals have soft, near-vertical streaks fanning from the base —
+  // not feather-like side branches.
+  ctx.lineWidth = size * 0.007;
+  for (let i = 0; i < 8; i++) {
+    const off = (i - 3.5) / 3.5; // -1 … 1
+    ctx.strokeStyle = `rgba(15,18,80,${0.09 - Math.abs(off) * 0.03})`;
+    ctx.beginPath();
+    ctx.moveTo(size * (0.5 + off * 0.06), size * 0.92);
+    ctx.quadraticCurveTo(
+      size * (0.5 + off * 0.3), size * 0.55,
+      size * (0.5 + off * 0.4), size * (0.16 + Math.abs(off) * 0.1)
+    );
+    ctx.stroke();
   }
-
-  // Light vein highlights (embossed feel)
-  ctx.strokeStyle = 'rgba(255,255,255,0.14)';
-  ctx.lineWidth = size * 0.004;
-  for (let i = 0; i < 5; i++) {
-    const t = 0.25 + i * 0.14;
-    const y0 = size * (0.92 - t * 0.75);
-    const spread = size * (0.14 + t * 0.3);
-    for (const dir of [-1, 1]) {
-      ctx.beginPath();
-      ctx.moveTo(size * 0.505, y0 + size * 0.008);
-      ctx.quadraticCurveTo(
-        size * 0.5 + dir * spread * 0.5, y0 - size * 0.08,
-        size * 0.5 + dir * spread * 0.94, y0 - size * (0.13 + t * 0.09)
-      );
-      ctx.stroke();
-    }
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+  ctx.lineWidth = size * 0.005;
+  for (let i = 0; i < 6; i++) {
+    const off = (i - 2.5) / 2.5;
+    ctx.beginPath();
+    ctx.moveTo(size * (0.51 + off * 0.07), size * 0.9);
+    ctx.quadraticCurveTo(
+      size * (0.51 + off * 0.26), size * 0.5,
+      size * (0.51 + off * 0.36), size * (0.2 + Math.abs(off) * 0.1)
+    );
+    ctx.stroke();
   }
 
   // Fine organic grain
@@ -220,7 +212,9 @@ async function loadPhotoSprites() {
       img.src = src;
     });
   const imgs = await Promise.all(
-    [1, 2, 3, 4].map((i) => tryLoad(`${import.meta.env.BASE_URL}petals/petal-${i}.png`))
+    [1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) =>
+      tryLoad(`${import.meta.env.BASE_URL}petals/petal-${i}.png`)
+    )
   );
   const found = imgs.filter(Boolean);
   return found.length ? found : null;
@@ -247,7 +241,10 @@ export default function PetalField({ density = 1, className }) {
     let disposed = false;
 
     loadPhotoSprites().then((photos) => {
-      if (photos && !disposed) sprites = photos;
+      if (!photos || disposed) return;
+      sprites = photos;
+      // Adopt the real petals immediately on already-spawned particles
+      for (const p of petals) p.sprite = photos[(Math.random() * photos.length) | 0];
     });
 
     const pointer = { x: -9999, y: -9999, vx: 0, vy: 0, px: -9999, py: -9999 };
@@ -358,9 +355,9 @@ export default function PetalField({ density = 1, className }) {
         p.y += p.vy * dt + p.fy * dt;
         p.rot += (p.rotVel + p.spin) * dt * Math.PI;
 
-        // Recycle
+        // Recycle (picks a fresh sprite from the current set)
         if (p.y - p.size > h + 40) {
-          Object.assign(p, makePetal(false), { sprite: p.sprite });
+          Object.assign(p, makePetal(false));
         }
         if (p.x < -p.size - 80) p.x = w + p.size;
         if (p.x > w + p.size + 80) p.x = -p.size;

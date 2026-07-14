@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { usePageTitle } from '../hooks/usePageTitle';
 import { useReveal } from '../hooks/useReveal';
 import { PRODUCTS, CONTACT } from '../data/content';
 import './Products.css';
@@ -12,6 +13,7 @@ const ArrowIcon = () => (
 export default function Products() {
   const scope = useRef(null);
   useReveal(scope);
+  usePageTitle('CCMARQ Skin Care');
   const [active, setActive] = useState(null);
 
   return (

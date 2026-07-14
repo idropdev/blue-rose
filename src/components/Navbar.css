@@ -99,6 +99,24 @@
 .nav__burger.is-open span:first-child { transform: translate(-50%, -50%) rotate(45deg); }
 .nav__burger.is-open span:last-child { transform: translate(-50%, -50%) rotate(-45deg); }
 
+/* Open state: lift the header above the drawer so the burger stays tappable */
+.nav--open { z-index: 300; }
+.nav--open .nav__inner {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.nav--open .nav__brand { color: var(--white); }
+.nav--open .nav__brand-text em { color: var(--white); }
+.nav--open .nav__brand-text small { color: var(--periwinkle); }
+.nav--open .nav__burger {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: transparent;
+}
+.nav--open .nav__burger span { background: var(--white); }
+
 /* Mobile drawer */
 .nav-drawer {
   position: fixed;

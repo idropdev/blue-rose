@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import MapSection from '../components/MapSection';
+import { usePageTitle } from '../hooks/usePageTitle';
 import { useReveal } from '../hooks/useReveal';
 import { SERVICES, CONTACT } from '../data/content';
 import './Services.css';
@@ -13,6 +14,7 @@ const ArrowIcon = () => (
 export default function Services() {
   const scope = useRef(null);
   useReveal(scope);
+  usePageTitle('Services');
 
   return (
     <main ref={scope} className="services-page">

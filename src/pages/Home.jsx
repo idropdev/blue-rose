@@ -4,6 +4,7 @@ import PetalField from '../components/PetalField';
 import ServicesCarousel from '../components/ServicesCarousel';
 import MapSection from '../components/MapSection';
 import RoseMark from '../components/RoseMark';
+import { usePageTitle } from '../hooks/usePageTitle';
 import { useReveal, useGSAP, gsap } from '../hooks/useReveal';
 import {
   CONTACT,
@@ -24,6 +25,7 @@ const ArrowIcon = () => (
 export default function Home() {
   const scope = useRef(null);
   useReveal(scope);
+  usePageTitle();
 
   // Hero entrance timeline
   useGSAP(

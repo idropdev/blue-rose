@@ -4,6 +4,13 @@
 const wix = (id, w, h) =>
   `https://static.wixstatic.com/media/${id}/v1/fill/w_${w},h_${h},q_90,enc_avif,quality_auto/${id}`;
 
+// `fit` keeps the full image (no crop) — used for product bottle shots.
+const wixFit = (id, w, h) =>
+  `https://static.wixstatic.com/media/${id}/v1/fit/w_${w},h_${h},q_90/${id}`;
+
+const unsplash = (id, w = 900) =>
+  `https://images.unsplash.com/photo-${id}?w=${w}&q=80&auto=format&fit=crop`;
+
 export const CONTACT = {
   name: 'Blue Rose Aesthetics & Wellness, PLLC',
   address: '801 Myrtle Ave, Suite 104, El Paso, TX 79901',
@@ -29,7 +36,7 @@ export const SERVICES = [
     short: 'Botox, Xeomin & wrinkle smoothing',
     duration: '1 hr',
     price: 'From $8 / unit',
-    image: wix('1d5344_eff1f327e6524ab3badc2ed9521dea34~mv2.jpg', 800, 1000),
+    image: wix('43e5d3f2b08340f985528fdd190b20e9.jpg', 900, 1100),
     description:
       'Botox, Xeomin, and other top brands to smooth out wrinkles and rejuvenate your appearance. Priced per unit or by area, customized by our skilled professionals.',
   },
@@ -39,7 +46,7 @@ export const SERVICES = [
     short: 'Fuller, natural-looking lips',
     duration: '1 hr',
     price: '$250',
-    image: wix('43e5d3f2b08340f985528fdd190b20e9.jpg', 1000, 800),
+    image: unsplash('1487412947147-5cebf100ffc2'),
     description:
       'Achieve fuller, plumper lips and redefine your lip shape for a more confident smile — enhancing your natural beauty with a comfortable, safe procedure.',
   },
@@ -79,7 +86,7 @@ export const SERVICES = [
     short: 'Medical-grade skin renewal',
     duration: '1 hr',
     price: 'From $80',
-    image: wix('11062b_7ee911d5f888476cafaac3d17bc2c278~mv2.jpg', 780, 1029),
+    image: unsplash('1570172619644-dfd03ed5d881'),
     description:
       'Customized medical-grade treatment: comprehensive skin assessment, deep cleansing, exfoliation, and targeted extractions for clarity, texture, and glow.',
   },
@@ -146,7 +153,7 @@ export const PRODUCTS = [
       'A soothing, alcohol-free toner that gently refines pores, restores pH balance, and delivers lightweight hydration.',
     ingredients: 'Peptide Complex · Aloe · Cucumber',
     size: '6.8 oz',
-    image: wix('1d5344_deed50265a044632867e65ce43e19235~mv2.png', 700, 700),
+    image: wixFit('1d5344_deed50265a044632867e65ce43e19235~mv2.png', 700, 700),
   },
   {
     name: 'Revitalizing Cleanser',
@@ -156,7 +163,7 @@ export const PRODUCTS = [
       'A gentle, hydrating cleanser that removes impurities while maintaining the skin’s moisture barrier.',
     ingredients: 'Peptide Complex · Hyaluronic Acid · Aloe Extract',
     size: '7.1 oz',
-    image: wix('1d5344_215e7567d99445478a0552139a86f84d~mv2.png', 700, 700),
+    image: wixFit('1d5344_215e7567d99445478a0552139a86f84d~mv2.png', 700, 700),
   },
   {
     name: 'HA Physical Tint',
@@ -166,7 +173,7 @@ export const PRODUCTS = [
       'A physical sunscreen with broad-spectrum UV protection and a tinted finish. Water resistant (40 min).',
     ingredients: 'Titanium Dioxide 5.5% · Hyaluronic Acid',
     size: '2.1 oz',
-    image: wix('1d5344_d4220ad04a7047d29425020e8114f979~mv2.png', 700, 700),
+    image: wixFit('1d5344_d4220ad04a7047d29425020e8114f979~mv2.png', 700, 700),
   },
   {
     name: 'Glow Guard',
@@ -176,7 +183,7 @@ export const PRODUCTS = [
       'A sheer, lightweight sunscreen that layers seamlessly under makeup with an elegant finish.',
     ingredients: 'Zinc Oxide 10% · Octinoxate 7.5% · Knotweed',
     size: '2 oz',
-    image: wix('1d5344_e3fa45da905841ed8919685762d02ece~mv2.png', 700, 700),
+    image: wixFit('1d5344_e3fa45da905841ed8919685762d02ece~mv2.png', 700, 700),
   },
   {
     name: 'Nectar R CoQ10',
@@ -185,7 +192,7 @@ export const PRODUCTS = [
     description: 'Hydrating antioxidant serum powered by CoQ10.',
     ingredients: 'CoQ10',
     size: '1 fl oz',
-    image: wix('1d5344_64a00860a0fc47fd8f30fff0186cd717~mv2.png', 700, 700),
+    image: wixFit('1d5344_64a00860a0fc47fd8f30fff0186cd717~mv2.png', 700, 700),
   },
   {
     name: 'Celestial Peptide Renewal',
@@ -195,7 +202,7 @@ export const PRODUCTS = [
       'A restorative treatment that supports moisture and promotes a firm, rejuvenated complexion.',
     ingredients: 'Peptide Complexes · Ceramides · Shea Butter',
     size: '2.1 oz',
-    image: wix('1d5344_562ebf158be841979ac84705bf7cbd8a~mv2.png', 700, 700),
+    image: wixFit('1d5344_562ebf158be841979ac84705bf7cbd8a~mv2.png', 700, 700),
   },
   {
     name: 'Wrinkle Repair Serum',
@@ -205,7 +212,7 @@ export const PRODUCTS = [
       'A high-potency retinol serum that reduces fine lines and uneven tone while promoting collagen synthesis.',
     ingredients: 'Retinol 0.5% · Bakuchiol',
     size: '1 fl oz',
-    image: wix('1d5344_df533ff3d6804994b57320a60623b6a4~mv2.png', 700, 700),
+    image: wixFit('1d5344_df533ff3d6804994b57320a60623b6a4~mv2.png', 700, 700),
   },
   {
     name: 'Bloom C & E',
@@ -215,7 +222,7 @@ export const PRODUCTS = [
       'A high-potency vitamin C & E serum that brightens, reduces hyperpigmentation, and shields against environmental stressors.',
     ingredients: 'Vitamin C 20% · Vitamin E 1% · Ferulic Acid',
     size: '1 fl oz',
-    image: wix('1d5344_1873291cc2614b2583925f380c697b5e~mv2.png', 700, 700),
+    image: wixFit('1d5344_1873291cc2614b2583925f380c697b5e~mv2.png', 700, 700),
   },
 ];
 

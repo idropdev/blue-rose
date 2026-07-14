@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import PetalField from '../components/PetalField';
 import RoseMark from '../components/RoseMark';
+import { usePageTitle } from '../hooks/usePageTitle';
 import { useReveal } from '../hooks/useReveal';
 import { CONTACT, STORY_QUOTE } from '../data/content';
 import './About.css';
@@ -15,6 +16,7 @@ const STORY = [
 export default function About() {
   const scope = useRef(null);
   useReveal(scope);
+  usePageTitle('Our Provider');
 
   return (
     <main ref={scope} className="about-page">

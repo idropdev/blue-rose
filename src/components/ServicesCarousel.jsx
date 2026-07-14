@@ -23,10 +23,11 @@ export default function ServicesCarousel() {
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
-    update();
+    const raf = requestAnimationFrame(update);
     el.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
     return () => {
+      cancelAnimationFrame(raf);
       el.removeEventListener('scroll', update);
       window.removeEventListener('resize', update);
     };
@@ -63,7 +64,7 @@ export default function ServicesCarousel() {
       if (Math.abs(dx) > 4) moved = true;
       el.scrollLeft = startScroll - dx;
     };
-    const onUp = (e) => {
+    const onUp = () => {
       if (!down) return;
       down = false;
       el.classList.remove('is-dragging');

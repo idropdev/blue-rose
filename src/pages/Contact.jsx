@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import MapSection from '../components/MapSection';
+import { usePageTitle } from '../hooks/usePageTitle';
 import { useReveal } from '../hooks/useReveal';
 import { CONTACT } from '../data/content';
 import './Contact.css';
@@ -35,6 +36,7 @@ const CHANNELS = [
 export default function Contact() {
   const scope = useRef(null);
   useReveal(scope);
+  usePageTitle('Contact');
 
   return (
     <main ref={scope} className="contact-page">

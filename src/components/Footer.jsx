@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Logo from './Logo';
 import RoseMark from './RoseMark';
 import { CONTACT } from '../data/content';
 import './Footer.css';
